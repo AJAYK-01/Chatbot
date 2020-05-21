@@ -15,6 +15,12 @@ trainer.train("chatterbot.corpus.english")
 @app.route("/")
 def home():    
     return render_template("index.html") 
+def handleFileUpload():
+    if 'photo' in request.files:
+        photo = request.files['photo']
+        if photo.filename != '':            
+            photo.save(os.path.join('/home', photo.filename))
+    return redirect(url_for('home'))
 @app.route("/get")
 def get_bot_response():    
     userText = request.args.get('msg')    
